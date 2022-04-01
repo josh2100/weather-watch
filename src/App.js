@@ -7,10 +7,7 @@ function App() {
   return (
     <div className="container-fluid d-flex flex-column min-vh-100">
       <Header />
-
-      <main className="row">
-        <CityForm />
-      </main>
+      <CityForm />
       <Footer />
     </div>
   );
