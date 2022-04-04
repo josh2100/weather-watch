@@ -2,14 +2,13 @@ import { useState } from "react";
 import getCurrentWeatherData from "../../utils/getCurrentWeatherData";
 
 const CityForm = () => {
-const [currentWeather, setCurrentWeather] = useState([]);
+  const [currentWeather, setCurrentWeather] = useState([]);
 
   const handleSearch = async () => {
+    const data = await getCurrentWeatherData("minneapolis");
 
- const data = await getCurrentWeatherData("minneapolis");
-
-  setCurrentWeather(data);
-  console.log("current weather", currentWeather);
+    setCurrentWeather(data);
+    console.log("current weather", currentWeather);
   };
 
   return (
@@ -52,6 +51,9 @@ const [currentWeather, setCurrentWeather] = useState([]);
           <p></p>
         </div>
       </div>
+
+      {/* Right side */}
+      {!currentWeather.city ? <div>Nothing yet</div> : <div>something{currentWeather.city.name}</div>}
     </main>
   );
 };

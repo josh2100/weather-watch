@@ -34,7 +34,7 @@ const getCurrentWeatherData = async (cityQuery) => {
   try {
     const currentWeather = await fetch(cityApi);
     const jsonCurrentWeather = await currentWeather.json();
-    console.log(jsonCurrentWeather);
+    // console.log(jsonCurrentWeather);
     return jsonCurrentWeather;
   } catch (error) {
     throw error;
