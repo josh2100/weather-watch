@@ -1,14 +1,33 @@
 import { useState } from "react";
-import getCurrentWeatherData from "../../utils/getCurrentWeatherData";
+import {
+  getCurrentWeatherData,
+  getOneCallData,
+} from "../../utils/getCurrentWeatherData";
 
 const CityForm = () => {
   const [currentWeather, setCurrentWeather] = useState([]);
+  const [oneCallData, setOneCallData] = useState([]);
+  const [latitude, setLatitude] = useState([]);
+  const [longitude, setLongitude] = useState([]);
 
   const handleSearch = async () => {
-    const data = await getCurrentWeatherData("minneapolis");
+    try {
+      const data = await getCurrentWeatherData("minneapolis");
+      setCurrentWeather(data);
 
-    setCurrentWeather(data);
-    console.log("current weather", currentWeather);
+      const secondApiCall = await getOneCallData(data.city.coord.lat, data.city.coord.lon);
+      setOneCallData(secondApiCall);
+      setLatitude(data.city.coord.lat);
+      setLongitude(data.city.coord.lon);
+      console.log("oneCallData", oneCallData);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const testHandle = async () => {
+    console.log("testHandle");
+    getOneCallData(latitude, longitude);
   };
 
   return (
@@ -53,7 +72,31 @@ const CityForm = () => {
       </div>
 
       {/* Right side */}
-      {!currentWeather.city ? <div>Nothing yet</div> : <div>something{currentWeather.city.name}</div>}
+      {/* Check that both APIs have data before rendering */}
+              {!currentWeather.city || !oneCallData.lat? (
+        <div>Nothing yet</div>
+      ) : (
+        <div>
+          <p>City {currentWeather.city.name}</p>
+          <p>
+            Latitude:
+            {latitude}
+          </p>
+          <p>
+            Longitude:
+            {longitude}
+          </p>
+          <p>
+            OneCallData temp: 
+            {oneCallData.current.temp}
+          </p>
+          <button
+            onClick={() => {
+              testHandle();
+            }}
+          >Test OneCall</button>
+        </div>
+      )}
     </main>
   );
 };
