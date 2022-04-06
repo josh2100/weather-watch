@@ -50,13 +50,12 @@ const CityForm = () => {
       m-2
     "
         >
-          {element}
           <div>{dateBuilder(element)}</div>
           <img
             src={`http://openweathermap.org/img/wn/${oneCallData.daily[element].weather[0].icon}.png`}
             alt="weather icon"
           ></img>
-          <div></div>
+          <div>Temp: {Math.round(oneCallData.daily[element].temp.day)} °F</div>
         </div>
       );
     }
