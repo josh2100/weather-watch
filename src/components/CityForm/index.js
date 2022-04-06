@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  getCurrentWeatherData,
-  getOneCallData,
-} from "../../utils/weatherApi";
+import { getCurrentWeatherData, getOneCallData } from "../../utils/weatherApi";
 import dateBuilder from "../../utils/dateBuilder";
 
 const CityForm = () => {
@@ -12,22 +9,28 @@ const CityForm = () => {
   const [longitude, setLongitude] = useState([]);
 
   const currentWeatherDisplay = () => {
+
     return (
-      // <div>
-      //   <p>
-      //     OneCallData temp:
-      //     {oneCallData.current.temp}
-      //   </p>
-      // </div>
       <section className="lint rounded text-center">
-      <h2 id="cityName" className="lint text-center">{currentWeather.city.name} {dateBuilder(0)}</h2>
-      <div id="current-weather-icon"></div>
-      <div id="current-temp" className="lint">Current Temp: {oneCallData.current.temp} °F</div>
-      <div id="current-wind" className="lint">Wind: {oneCallData.current.wind_speed} MPH</div>
-      <div id="current-humidity" className="lint"></div>
-      <span id="current-uvi" className=""></span>
-      <span id="uvi-color"></span>
-    </section>
+        <h2 id="cityName" className="lint text-center">
+          {currentWeather.city.name} {dateBuilder(0)}
+        </h2>
+        <img src={`http://openweathermap.org/img/wn/${oneCallData.current.weather[0].icon}.png`}></img>
+        <div id="current-weather-icon"></div>
+        <div id="current-temp" className="lint">
+          Current Temp: {oneCallData.current.temp} °F
+        </div>
+        <div id="current-wind" className="lint">
+          Wind: {oneCallData.current.wind_speed} MPH
+        </div>
+        <div id="current-humidity" className="lint">
+          Humidity: {oneCallData.current.humidity}%
+        </div>
+        <span id="current-uvi" className="">
+          UV Index: {oneCallData.current.uvi}
+        </span>
+        <span id="uvi-color"></span>
+      </section>
     );
   };
 
@@ -101,7 +104,6 @@ const CityForm = () => {
         <div>Nothing yet</div>
       ) : (
         <div className="col-12 col-md-8 col-lg-9 mt-3">
-
           {/* <p>City {currentWeather.city.name}</p>
           <p>
             Latitude:
