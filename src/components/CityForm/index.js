@@ -5,8 +5,7 @@ import dateBuilder from "../../utils/dateBuilder";
 const CityForm = () => {
   const [currentWeather, setCurrentWeather] = useState([]);
   const [oneCallData, setOneCallData] = useState([]);
-  const [latitude, setLatitude] = useState([]);
-  const [longitude, setLongitude] = useState([]);
+  const [inputText, setInputText] = useState([""]);
 
   const currentWeatherDisplay = () => {
     return (
@@ -39,10 +38,9 @@ const CityForm = () => {
     const fiveDays = [];
 
     for (let i = 0; i <= 5; i++) {
-      const element = i;
       fiveDays.push(
         <div
-          key={element}
+          key={i}
           className="
       col-11 col-sm-4 col-md-5 col-lg col-xl
       rounded
@@ -50,12 +48,16 @@ const CityForm = () => {
       m-2
     "
         >
-          <div>{dateBuilder(element)}</div>
+          <div>{dateBuilder(i + 1)}</div>
           <img
-            src={`http://openweathermap.org/img/wn/${oneCallData.daily[element].weather[0].icon}.png`}
+            src={`http://openweathermap.org/img/wn/${
+              oneCallData.daily[i + 1].weather[0].icon
+            }.png`}
             alt="weather icon"
           ></img>
-          <div>Temp: {Math.round(oneCallData.daily[element].temp.day)} °F</div>
+          <div>Temp: {Math.round(oneCallData.daily[i + 1].temp.day)} °F</div>
+          <div>Wind: {Math.round(oneCallData.daily[i + 1].wind_speed)} MPH</div>
+          <div>Humidity: {Math.round(oneCallData.daily[i + 1].humidity)}%</div>
         </div>
       );
     }
@@ -63,9 +65,10 @@ const CityForm = () => {
     return fiveDays;
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (event) => {
     try {
-      const data = await getCurrentWeatherData("minneapolis");
+      // const data = await getCurrentWeatherData("minneapolis");
+      const data = await getCurrentWeatherData(inputText);
       setCurrentWeather(data);
 
       const secondApiCall = await getOneCallData(
@@ -73,18 +76,15 @@ const CityForm = () => {
         data.city.coord.lon
       );
       setOneCallData(secondApiCall);
-      setLatitude(data.city.coord.lat);
-      setLongitude(data.city.coord.lon);
       console.log("oneCallData", oneCallData);
     } catch (error) {
       throw error;
     }
   };
 
-  // const testHandle = async () => {
-  //   console.log("testHandle");
-  //   getOneCallData(latitude, longitude);
-  // };
+  const handleChange = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <main className="row">
@@ -94,7 +94,8 @@ const CityForm = () => {
           id="cityForm"
           action=""
           method="get"
-          className="citySearch p-3 lint"
+          className="citySearch p-3 lint"j
+          onSubmit={handleChange}
         >
           {/* <!-- Search for City  --> */}
           <div className="citySearch lint">
@@ -107,7 +108,9 @@ const CityForm = () => {
               name="name"
               id="name"
               required
-              placeholder="Minneapolis"
+              // placeholder="Minneapolis"
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
             />
           </div>
           <div className="citySearch">
