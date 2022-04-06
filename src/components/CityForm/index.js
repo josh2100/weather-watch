@@ -9,14 +9,15 @@ const CityForm = () => {
   const [longitude, setLongitude] = useState([]);
 
   const currentWeatherDisplay = () => {
-
     return (
       <section className="lint rounded text-center">
         <h2 id="cityName" className="lint text-center">
           {currentWeather.city.name} {dateBuilder(0)}
         </h2>
-        <img src={`http://openweathermap.org/img/wn/${oneCallData.current.weather[0].icon}.png`}></img>
-        <div id="current-weather-icon"></div>
+        <img
+          src={`http://openweathermap.org/img/wn/${oneCallData.current.weather[0].icon}.png`}
+          alt="weather icon"
+        ></img>
         <div id="current-temp" className="lint">
           Current Temp: {oneCallData.current.temp} °F
         </div>
@@ -32,6 +33,35 @@ const CityForm = () => {
         <span id="uvi-color"></span>
       </section>
     );
+  };
+
+  const fiveDayForecast = () => {
+    const fiveDays = [];
+
+    for (let i = 0; i <= 5; i++) {
+      const element = [i];
+      fiveDays.push(
+        <div
+          key={element}
+          className="
+      col-11 col-sm-4 col-md-5 col-lg col-xl
+      rounded
+      baby-blue
+      m-2
+    "
+        >
+          {element}
+          <div>{dateBuilder(element)}</div>
+          <img
+            src={`http://openweathermap.org/img/wn/${oneCallData.daily[element].weather[0].icon}.png`}
+            alt="weather icon"
+          ></img>
+          <div></div>
+        </div>
+      );
+    }
+
+    return fiveDays;
   };
 
   const handleSearch = async () => {
@@ -52,10 +82,10 @@ const CityForm = () => {
     }
   };
 
-  const testHandle = async () => {
-    console.log("testHandle");
-    getOneCallData(latitude, longitude);
-  };
+  // const testHandle = async () => {
+  //   console.log("testHandle");
+  //   getOneCallData(latitude, longitude);
+  // };
 
   return (
     <main className="row">
@@ -104,19 +134,6 @@ const CityForm = () => {
         <div>Nothing yet</div>
       ) : (
         <div className="col-12 col-md-8 col-lg-9 mt-3">
-          {/* <p>City {currentWeather.city.name}</p>
-          <p>
-            Latitude:
-            {latitude}
-          </p>
-          <p>
-            Longitude:
-            {longitude}
-          </p> */}
-          {/* <p>
-            OneCallData temp:
-            {oneCallData.current.temp}
-          </p> */}
           {/* <button
             onClick={() => {
               testHandle();
@@ -125,6 +142,15 @@ const CityForm = () => {
             Test OneCall
           </button> */}
           {currentWeatherDisplay()}
+          {/* 5 day forecast */}
+          <section className="container-fluid rounded">
+            <div className="row mt-3 lint">
+              <h2 id="" className="lint mx-auto">
+                5 Day Forecast
+              </h2>
+              {fiveDayForecast()}
+            </div>
+          </section>
         </div>
       )}
     </main>

@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&display=swap");
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,4 +8,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.champagne {
+  background-color: #feefde;
+}
+
+.lint {
+  background-color: #dfdacd;
+}
+
+.baby-blue {
+  background-color: #dae3e6;
 }
