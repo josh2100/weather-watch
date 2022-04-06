@@ -2,7 +2,8 @@ import { useState } from "react";
 import {
   getCurrentWeatherData,
   getOneCallData,
-} from "../../utils/getCurrentWeatherData";
+} from "../../utils/weatherApi";
+import dateBuilder from "../../utils/dateBuilder";
 
 const CityForm = () => {
   const [currentWeather, setCurrentWeather] = useState([]);
@@ -10,12 +11,35 @@ const CityForm = () => {
   const [latitude, setLatitude] = useState([]);
   const [longitude, setLongitude] = useState([]);
 
+  const currentWeatherDisplay = () => {
+    return (
+      // <div>
+      //   <p>
+      //     OneCallData temp:
+      //     {oneCallData.current.temp}
+      //   </p>
+      // </div>
+      <section className="lint rounded text-center">
+      <h2 id="cityName" className="lint text-center">{currentWeather.city.name} {dateBuilder(0)}</h2>
+      <div id="current-weather-icon"></div>
+      <div id="current-temp" className="lint">Current Temp: {oneCallData.current.temp} °F</div>
+      <div id="current-wind" className="lint">Wind: {oneCallData.current.wind_speed} MPH</div>
+      <div id="current-humidity" className="lint"></div>
+      <span id="current-uvi" className=""></span>
+      <span id="uvi-color"></span>
+    </section>
+    );
+  };
+
   const handleSearch = async () => {
     try {
       const data = await getCurrentWeatherData("minneapolis");
       setCurrentWeather(data);
 
-      const secondApiCall = await getOneCallData(data.city.coord.lat, data.city.coord.lon);
+      const secondApiCall = await getOneCallData(
+        data.city.coord.lat,
+        data.city.coord.lon
+      );
       setOneCallData(secondApiCall);
       setLatitude(data.city.coord.lat);
       setLongitude(data.city.coord.lon);
@@ -73,11 +97,12 @@ const CityForm = () => {
 
       {/* Right side */}
       {/* Check that both APIs have data before rendering */}
-              {!currentWeather.city || !oneCallData.lat? (
+      {!currentWeather.city || !oneCallData.lat ? (
         <div>Nothing yet</div>
       ) : (
-        <div>
-          <p>City {currentWeather.city.name}</p>
+        <div className="col-12 col-md-8 col-lg-9 mt-3">
+
+          {/* <p>City {currentWeather.city.name}</p>
           <p>
             Latitude:
             {latitude}
@@ -85,16 +110,19 @@ const CityForm = () => {
           <p>
             Longitude:
             {longitude}
-          </p>
-          <p>
-            OneCallData temp: 
+          </p> */}
+          {/* <p>
+            OneCallData temp:
             {oneCallData.current.temp}
-          </p>
-          <button
+          </p> */}
+          {/* <button
             onClick={() => {
               testHandle();
             }}
-          >Test OneCall</button>
+          >
+            Test OneCall
+          </button> */}
+          {currentWeatherDisplay()}
         </div>
       )}
     </main>
