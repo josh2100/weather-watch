@@ -96,6 +96,35 @@ const CityForm = () => {
     console.log("recentSearches 95:", recentSearches);
   };
 
+  const recentSearchButtons = () => {
+    let arr = [];
+
+   for (let i = 0; i < 10; i++) {
+      if (recentSearches[i]) {
+        arr.push(<button>{recentSearches[i]}</button>)
+        // Make a button
+        // let newSearchButton = document.createElement("button");
+        // // Give it the text of a search term in uppercase
+        // let recentSearch = document.createTextNode(
+        //   recentSearches[i].toUpperCase()
+        // );
+        // // Add it to recent search section and add classes
+        // newSearchButton.appendChild(recentSearch);
+        // newSearchButton.classList.add("rounded", "p-1", "m-1", "baby-blue");
+        // recentSearchesEl.appendChild(newSearchButton);
+  
+        // // Add event listener to the new search button
+        // newSearchButton.addEventListener("click", function (event) {
+        //   searchInput.value = event.target.innerHTML.toLowerCase();
+        // });
+      } else {
+        break;
+      }
+    }
+
+    return arr;
+  };
+
   const handleSearch = async (event) => {
     try {
       // const data = await getCurrentWeatherData("minneapolis");
@@ -162,7 +191,7 @@ const CityForm = () => {
         </form>
         {/* <!-- Recent Search Buttons --> */}
         <div id="recent-searches" className="p-3">
-          <p></p>
+          <p>{recentSearchButtons()}</p>
         </div>
       </div>
 
