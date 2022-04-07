@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getCurrentWeatherData, getOneCallData } from "../../utils/weatherApi";
 import dateBuilder from "../../utils/dateBuilder";
 
@@ -6,6 +6,7 @@ const CityForm = () => {
   const [currentWeather, setCurrentWeather] = useState([]);
   const [oneCallData, setOneCallData] = useState([]);
   const [inputText, setInputText] = useState([""]);
+  const [recentSearches, setRecentSearches] = useState([]);
 
   const currentWeatherDisplay = () => {
     return (
@@ -65,6 +66,36 @@ const CityForm = () => {
     return fiveDays;
   };
 
+  const loadRecentSearches = () => {
+    let city = JSON.parse(localStorage.getItem("city"));
+    let data;
+
+    if (city) {
+      data = JSON.parse(localStorage.getItem("city"));
+      setRecentSearches(data);
+      console.log("recent searches", data);
+    }
+  };
+
+  const saveRecentSearches = () => {
+    let checkIfAlreadyAdded = function () {
+      for (let index = 0; index < recentSearches.length; index++) {
+        if (inputText === recentSearches[index]) {
+          return true;
+        }
+      }
+    };
+
+    if (recentSearches.some(checkIfAlreadyAdded)) {
+    } else {
+      // If search query is not already present, add to beginning of array
+      recentSearches.unshift(inputText);
+    }
+
+    localStorage.setItem("city", JSON.stringify(recentSearches));
+    console.log("recentSearches 95:", recentSearches);
+  };
+
   const handleSearch = async (event) => {
     try {
       // const data = await getCurrentWeatherData("minneapolis");
@@ -77,6 +108,7 @@ const CityForm = () => {
       );
       setOneCallData(secondApiCall);
       console.log("oneCallData", oneCallData);
+      saveRecentSearches();
     } catch (error) {
       throw error;
     }
@@ -86,6 +118,10 @@ const CityForm = () => {
     event.preventDefault();
   };
 
+  useEffect(() => {
+    loadRecentSearches();
+  }, []);
+
   return (
     <main className="row">
       {/* Left Side */}
@@ -94,7 +130,7 @@ const CityForm = () => {
           id="cityForm"
           action=""
           method="get"
-          className="citySearch p-3 lint"j
+          className="citySearch p-3 lint"
           onSubmit={handleChange}
         >
           {/* <!-- Search for City  --> */}
