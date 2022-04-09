@@ -88,7 +88,6 @@ const CityForm = () => {
 
     if (recentSearches.some(checkIfAlreadyAdded)) {
     } else {
-      // If search query is not already present, add to beginning of array
       recentSearches.unshift(inputText.toUpperCase());
     }
 
@@ -101,22 +100,16 @@ const CityForm = () => {
 
     for (let i = 0; i < 10; i++) {
       if (recentSearches[i]) {
-        arr.push(<button onClick={() => {handleRecentButton(recentSearches[i].toUpperCase())}}>{recentSearches[i]}</button>);
-        // Make a button
-        // let newSearchButton = document.createElement("button");
-        // // Give it the text of a search term in uppercase
-        // let recentSearch = document.createTextNode(
-        //   recentSearches[i].toUpperCase()
-        // );
-        // // Add it to recent search section and add classes
-        // newSearchButton.appendChild(recentSearch);
-        // newSearchButton.classList.add("rounded", "p-1", "m-1", "baby-blue");
-        // recentSearchesEl.appendChild(newSearchButton);
-
-        // // Add event listener to the new search button
-        // newSearchButton.addEventListener("click", function (event) {
-        //   searchInput.value = event.target.innerHTML.toLowerCase();
-        // });
+        arr.push(
+          <button
+            className="rounded p-1 m-1 baby-blue"
+            onClick={() => {
+              handleRecentButton(recentSearches[i].toUpperCase());
+            }}
+          >
+            {recentSearches[i]}
+          </button>
+        );
       } else {
         break;
       }
@@ -127,7 +120,6 @@ const CityForm = () => {
 
   const handleSearch = async (event) => {
     try {
-      // const data = await getCurrentWeatherData("minneapolis");
       const data = await getCurrentWeatherData(inputText);
       setCurrentWeather(data);
 
@@ -178,7 +170,6 @@ const CityForm = () => {
               name="name"
               id="name"
               required
-              // placeholder="Minneapolis"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
             />
