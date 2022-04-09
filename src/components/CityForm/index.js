@@ -80,7 +80,7 @@ const CityForm = () => {
   const saveRecentSearches = () => {
     let checkIfAlreadyAdded = function () {
       for (let index = 0; index < recentSearches.length; index++) {
-        if (inputText === recentSearches[index]) {
+        if (inputText.toUpperCase() === recentSearches[index]) {
           return true;
         }
       }
@@ -89,7 +89,7 @@ const CityForm = () => {
     if (recentSearches.some(checkIfAlreadyAdded)) {
     } else {
       // If search query is not already present, add to beginning of array
-      recentSearches.unshift(inputText);
+      recentSearches.unshift(inputText.toUpperCase());
     }
 
     localStorage.setItem("city", JSON.stringify(recentSearches));
@@ -101,7 +101,7 @@ const CityForm = () => {
 
     for (let i = 0; i < 10; i++) {
       if (recentSearches[i]) {
-        arr.push(<button onClick={() => {handleRecentButton(recentSearches[i])}}>{recentSearches[i]}</button>);
+        arr.push(<button onClick={() => {handleRecentButton(recentSearches[i].toUpperCase())}}>{recentSearches[i]}</button>);
         // Make a button
         // let newSearchButton = document.createElement("button");
         // // Give it the text of a search term in uppercase
@@ -145,7 +145,6 @@ const CityForm = () => {
 
   const handleRecentButton = (text) => {
     setInputText(text);
-    // handleSearch();
     console.log(text);
   };
 
