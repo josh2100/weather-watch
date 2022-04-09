@@ -99,9 +99,9 @@ const CityForm = () => {
   const recentSearchButtons = () => {
     let arr = [];
 
-   for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       if (recentSearches[i]) {
-        arr.push(<button>{recentSearches[i]}</button>)
+        arr.push(<button onClick={() => {handleRecentButton(recentSearches[i])}}>{recentSearches[i]}</button>);
         // Make a button
         // let newSearchButton = document.createElement("button");
         // // Give it the text of a search term in uppercase
@@ -112,7 +112,7 @@ const CityForm = () => {
         // newSearchButton.appendChild(recentSearch);
         // newSearchButton.classList.add("rounded", "p-1", "m-1", "baby-blue");
         // recentSearchesEl.appendChild(newSearchButton);
-  
+
         // // Add event listener to the new search button
         // newSearchButton.addEventListener("click", function (event) {
         //   searchInput.value = event.target.innerHTML.toLowerCase();
@@ -141,6 +141,12 @@ const CityForm = () => {
     } catch (error) {
       throw error;
     }
+  };
+
+  const handleRecentButton = (text) => {
+    setInputText(text);
+    // handleSearch();
+    console.log(text);
   };
 
   const handleChange = (event) => {
@@ -198,16 +204,9 @@ const CityForm = () => {
       {/* Right side */}
       {/* Check that both APIs have data before rendering */}
       {!currentWeather.city || !oneCallData.lat ? (
-        <div>Nothing yet</div>
+        <div></div>
       ) : (
         <div className="col-12 col-md-8 col-lg-9 mt-3">
-          {/* <button
-            onClick={() => {
-              testHandle();
-            }}
-          >
-            Test OneCall
-          </button> */}
           {currentWeatherDisplay()}
           {/* 5 day forecast */}
           <section className="container-fluid rounded">
