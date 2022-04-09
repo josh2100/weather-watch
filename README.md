@@ -1,7 +1,7 @@
 # Weather Watch
 React Application for retrieving weather data for anywhere in the world. 
 
-Deployment: deployment here
+Deployment: https://josh2100.github.io/weather-watch/
 
 ![Weather Watch Screenshot](./public/screenshot.png)
 
