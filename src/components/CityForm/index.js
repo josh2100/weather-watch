@@ -38,7 +38,7 @@ const CityForm = () => {
   const fiveDayForecast = () => {
     const fiveDays = [];
 
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i < 5; i++) {
       fiveDays.push(
         <div
           key={i}
